@@ -6,12 +6,12 @@
 export const environment = {
   production: false,
   firebase: {
-  	apiKey: "AIzaSyC337fkfRSqHb5tgULXxGoUk18kreYMoTw",
-    authDomain: "software-d0570.firebaseapp.com",
-    databaseURL: "https://software-d0570.firebaseio.com",
-    projectId: "software-d0570",
-    storageBucket: "software-d0570.appspot.com",
-    messagingSenderId: "490832258827",
-    appId: "1:490832258827:web:50e3ada77c550802a2e40e"
+  	apiKey: "AIzaSyAt9fm0e9qL9g9HNRpAnnVV4e6ASaMoM9g",
+    authDomain: "decentralized-providence.firebaseapp.com",
+    databaseURL: "https://decentralized-providence.firebaseio.com",
+    projectId: "decentralized-providence",
+    storageBucket: "decentralized-providence.appspot.com",
+    messagingSenderId: "682063721623",
+    appId: "1:682063721623:web:962c7d746ca28a057025d2"
   },
 };

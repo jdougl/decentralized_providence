@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 
-import { Bug } from '.././bug.model';
+import { Bug } from '../../models/bug.model';
 import { BugsService } from '../../bugs.service';
 import { AuthService } from '../../auth.service';
 

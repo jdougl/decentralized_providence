@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 import { MatSnackBar } from '@angular/material';
 
 import { BugsService } from '../../bugs.service';
-import { Bug } from '../bug.model';
+import { Bug } from '../../models/bug.model';
 
 @Component({
   selector: 'app-edit',
