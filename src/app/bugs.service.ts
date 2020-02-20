@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { Bug } from './models/bug.model';
+import { Issue } from './models/issue.model';
 import { Observable } from 'rxjs';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 
@@ -12,36 +12,36 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class BugsService {
-	bugsCollection: AngularFirestoreCollection<Bug>;
-	bugs: Observable<Bug[]>
+export class IssuesService {
+	issuesCollection: AngularFirestoreCollection<Issue>;
+	issues: Observable<Issue[]>
 
   constructor(private db: AngularFirestore) {
-  	this.bugsCollection = db.collection<Bug>("bugs");
+  	this.issuesCollection = db.collection<Issue>("issues");
   	this.repop();
    }
 
-  //fetch bugs from firebase DB
-  getBugs() {
+  //fetchs issues from firebase DB
+  getIssues() {
     this.repop();
-    return this.bugs;
+    return this.issues;
   }
 
-  getBugById(id) {
-    return this.bugsCollection.doc(id).get();
+  getIssueById(id) {
+    return this.issuesCollection.doc(id).get();
   }
 
   //add issue to firebase DB
-  addBug(bugTicket) {
-    this.bugsCollection.add(bugTicket);
+  addIssue(issueTicket) {
+    this.issuesCollection.add(issueTicket);
   }
 
-  //repopulates bugs
+  //repopulates issues
   repop() {
-    this.bugs = this.bugsCollection.snapshotChanges().pipe(
+    this.issues = this.issuesCollection.snapshotChanges().pipe(
       map(actions => {
       return actions.map(a => {
-        const data = a.payload.doc.data() as Bug;
+        const data = a.payload.doc.data() as Issue;
         const id = a.payload.doc.id;
         return { id, ...data };
         });
@@ -50,12 +50,12 @@ export class BugsService {
   }
 
   //deletes issue from backend
-  deleteBug(id) {
-    this.bugsCollection.doc(id).delete();
+  deleteIssue(id) {
+    this.issuesCollection.doc(id).delete();
   }
 
-  updateBug(id, newBugTicket) {
-    this.bugsCollection.doc(id).update(newBugTicket);
+  updateIssue(id, newIssueTicket) {
+    this.issuesCollection.doc(id).update(newBugTicket);
   }
 
 }
