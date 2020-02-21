@@ -5,8 +5,8 @@ import * as firebase from 'firebase';
 
 import { MatSnackBar } from '@angular/material';
 
-import { BugsService } from '../../bugs.service';
-import { Bug } from '../../models/bug.model';
+import { IssuesService } from '../../issues.service';
+import { Issue } from '../../models/issue.model';
 
 @Component({
   selector: 'app-edit',
@@ -16,60 +16,57 @@ import { Bug } from '../../models/bug.model';
 export class EditComponent implements OnInit {
 
   id: String;
-  bug: any = {};
+  issue: any = {};
   updateForm: FormGroup;
 
-  constructor(private bugService: BugsService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) { 
+  constructor(private issueService: IssuesService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) { 
     this.createForm();
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params.id;
-      this.bugService.getBugById(this.id).subscribe(res => {
-        this.bug = res;
-        this.updateForm.get('ticketNumber').setValue(this.bug.ticketNumber);
-        this.updateForm.get('ticketType').setValue(this.bug.ticketType);
-        this.updateForm.get('bugFinder').setValue(this.bug.bugFinder);
-        this.updateForm.get('bugDescription').setValue(this.bug.bugDescription);
-        this.updateForm.get('assignedDeveloper').setValue(this.bug.assignedDeveloper);
-        this.updateForm.get('priority').setValue(this.bug.priority);
-        this.updateForm.get('status').setValue(this.bug.status);
-        this.updateForm.get('ticketDate').setValue(this.bug.ticketDate);
+      this.issueService.getIssueById(this.id).subscribe(res => {
+        this.issue = res;
+        this.updateForm.get('issueCategory').setValue(this.issue.issueCategory);
+        this.updateForm.get('issueDescription').setValue(this.issue.issueDescription);
+        this.updateForm.get('issueEndDate').setValue(this.issue.issueEndDate);
+        this.updateForm.get('issueNumber').setValue(this.issue.issueNumber);
+        this.updateForm.get('issueStartDate').setValue(this.issue.issueStartDate);
+        this.updateForm.get('numVotes').setValue(this.issue.numVotes);
+        this.updateForm.get('status').setValue(this.issue.status);
       });
     });
   }
 
   createForm() {
     this.updateForm = this.fb.group({
-      ticketNumber: '',
-      ticketType: '',
-      bugFinder: '',
-      bugDescription: '',
-      assignedDeveloper: '',
-      priority: '',
-      status: '',
-      ticketDate: '',
+      issueCategory: '',
+      issueDescription: '',
+      issueEndDate: '',
+      issueNumber: '',
+      issueStartDate: '',
+      numVotes: '',
+      status: ''
     });
   }
 
-   updateBug(ticketNumber, ticketType, bugDescription, bugFinder, assignedDev, priority, status) {
-    const newBugTicket = {
-      ticketNumber: ticketNumber,
-      ticketType: ticketType,
-      bugDescription: bugDescription,
-      bugFinder: bugFinder,
-      assignedDev: assignedDev,
-      priority: priority,
+   updateIssue(issueCategory, issueDescription, issueEndDate, issueNumber, issueStartDate, numVotes, status) {
+    const newIssueTicket = {
+      issueCategory: issueCategory,
+      issueDescription: issueDescription,
+      issueEndDate: issueEndDate,
+      issueNumber: issueNumber,
+      issueStartDate: issueStartDate,
+      numVotes: numVotes,
       status: status,
-      ticketDate: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    this.bugService.updateBug(this.id, newBugTicket);
+    this.issueService.updateIssue(this.id, newIssueTicket);
 
-    console.log("Bug Updated");
+    console.log("Issue Updated");
 
-    alert("Bug Updated");
+    alert("Issue Updated");
 
     this.router.navigate(['/list']);
   }

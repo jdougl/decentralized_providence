@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BugsService } from '../../bugs.service';
+import { IssuesService } from '../../issues.service';
 import * as firebase from 'firebase';
 
 @Component({
@@ -14,34 +14,33 @@ export class CreateComponent implements OnInit {
 	createForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private router: Router, private bugService: BugsService) {
+  constructor(private fb: FormBuilder, private router: Router, private issueService: IssuesService) {
   	this.createForm = this.fb.group({
-      ticketNumber: '',
-      ticketType: '',
-      bugDescription: '',
-      bugFinder: '',
-      assignedDeveloper: '',
-      priority: '',
-      status: '',
+     issueCategory: '',
+     issueDescription: '',
+     issueEndDate: '',
+     issueNumber: '',
+     issueStartDate: '',
+     numVotes: '',
+     status: '',
     });
    }
 
-   addBug(ticketNumber, ticketType, bugDescription, bugFinder, assignedDev, priority, status) {
-    	const bugTicket = {
-      ticketNumber: ticketNumber,
-      ticketType: ticketType,
-      bugDescription: bugDescription,
-      bugFinder: bugFinder,
-      assignedDev: assignedDev,
-      priority: priority,
+   addBug(issueCategory, issueDescription, issueEndDate, issueNumber, issueStartDate, numVotes, status) {
+    	const issueTicket = {
+      issueCategory: issueCategory,
+      issueDescription: issueDescription,
+      issueEndDate: issueEndDate,
+      issueNumber: issueNumber,
+      issueStartDate: issueStartDate,
+      numVotes: numVotes,
       status: status,
-      ticketDate: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    this.bugService.addBug(bugTicket);
+    this.issueService.addIssue(issueTicket);
 
     //repops bug early - mainly just to avoid ticketDate getting flagged as not existing
-    this.bugService.repop();
+    this.issueService.repop();
 
     console.log("Bug written to backend DB");
 

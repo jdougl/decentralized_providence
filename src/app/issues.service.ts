@@ -55,7 +55,7 @@ export class IssuesService {
   }
 
   updateIssue(id, newIssueTicket) {
-    this.issuesCollection.doc(id).update(newBugTicket);
+    this.issuesCollection.doc(id).update(newIssueTicket);
   }
 
 }
