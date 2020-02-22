@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 
-import { Bug } from '../../models/bug.model';
-import { BugsService } from '../../bugs.service';
+import { Issue } from '../../models/issue.model';
+import { IssuesService } from '../../issues.service';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -12,34 +12,34 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-	bugs: Bug[];
-	displayedColumns = ['ticketNumber', 'ticketType', 'bugFinder', 'bugDescription', 'assignedDeveloper', 'priority', 'status', 'ticketDate', 'actions'];
+	issues: Issue[];
+	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status'];
   
 
-  constructor(private bugService: BugsService, private router: Router, private auth: AuthService) {
-     this.fetchBugs();
+  constructor(private issueService: IssuesService, private router: Router, private auth: AuthService) {
+     this.fetchIssues();
    }
 
   ngOnInit() {
-    this.fetchBugs();
+    this.fetchIssues();
   }
 
   
-  fetchBugs() {
-    this.bugService
-    .getBugs()
-    .subscribe((data: Bug[]) => {
-      this.bugs = data;
+  fetchIssues() {
+    this.issueService
+    .getIssues()
+    .subscribe((data: Issue[]) => {
+      this.issues = data;
       console.log('Data requested ... ');
     });
   }
   
-  deleteBug(id) {
-    this.bugService.deleteBug(id);
-    alert("Bug Deleted");
+  deleteIssue(id) {
+    this.issueService.deleteIssue(id);
+    alert("Issue Deleted");
   }
 
-  editBug(id) {
+  editIssue(id) {
     this.router.navigate([`/edit/${id}`]);
   }
 
