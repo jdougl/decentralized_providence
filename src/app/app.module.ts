@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatToolbarModule, 
   MatFormFieldModule, 
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatInputModule, 
   MatOptionModule, 
   MatSelectModule, 
@@ -50,6 +52,8 @@ import { EditComponent } from './components/edit/edit.component';
     CommonModule,
     MatToolbarModule, 
     MatFormFieldModule, 
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule, 
     MatOptionModule, 
     MatSelectModule, 

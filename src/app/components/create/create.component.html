@@ -8,36 +8,33 @@
     <br>
     <form [formGroup]="createForm" class="create-form">
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Ticket Number" formControlName="ticketNumber" #ticketNumber>
+        <input matInput placeholder="Issue Number" formControlName="issueNumber" #issueNumber>
       </mat-form-field>
       <br>
       <mat-form-field>
-          <mat-select placeholder="Type" formControlName="ticketType" #ticketType>
-            <mat-option value="Development">Development</mat-option>
-            <mat-option value="Testing">Testing</mat-option>
-            <mat-option value="Production">Production</mat-option>
+          <mat-select placeholder="Type" formControlName="issueCategory" #issueCategory>
+            <mat-option value="Development">Infrastructure</mat-option>
+            <mat-option value="Testing">Energy</mat-option>
+            <mat-option value="Production">Political</mat-option>
           </mat-select>
       </mat-form-field>
       <br>
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Bug Description" formControlName="bugDescription" #bugDescription>
+        <input matInput placeholder="Issue Description" formControlName="issueDescription" #issueDescription>
       </mat-form-field>
       <br>
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Bug Finder" formControlName="bugFinder" #bugFinder>
+        <input matInput placeholder="Start Date" [matDatepicker]="issueStartDate">
+        <mat-datepicker-toggle matSuffix [for]="issueStartDate"></mat-datepicker-toggle>
+        <mat-datepicker #issueStartDate></mat-datepicker>
       </mat-form-field>
       <br>
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Assigned Developer" formControlName="assignedDeveloper" #assignedDeveloper>
+        <input matInput [matDatepicker]="issueEndDate">
+        <mat-datepicker-toggle matSuffix [for]="issueEndDate"></mat-datepicker-toggle>
+        <mat-datepicker #issueEndDate></mat-datepicker>
       </mat-form-field>
       <br>
-      <mat-form-field>
-          <mat-select placeholder="Priority" formControlName="priority" #priority>
-            <mat-option value="Low">Low</mat-option>
-            <mat-option value="Medium">Medium</mat-option>
-            <mat-option value="High">High</mat-option>
-          </mat-select>
-      </mat-form-field>
       <br>
       <mat-form-field>
           <mat-select placeholder="Status" formControlName="status" #status>
@@ -51,7 +48,7 @@
       <mat-divider></mat-divider>
       <br><br>
       <button mat-raised-button color="accent" routerLink="/list">Back</button>&nbsp;
-      <button type="submit" (click)="addBug(ticketNumber.value, ticketType.value, bugDescription.value, bugFinder.value, assignedDeveloper.value, priority.value, status.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Save</button>
+      <button type="submit" (click)="addIssue(issueNumber.value, issueCategory.value, issueDescription.value, issueStartDate.date, issueEndDate.date, status.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Save</button>
     </form>
   </mat-card>
 </div>

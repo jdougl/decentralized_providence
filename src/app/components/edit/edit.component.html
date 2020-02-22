@@ -8,11 +8,11 @@
       <br>
       <form [formGroup]="updateForm" class="edit-form">
         <mat-form-field class="field-full-width">
-        <input matInput placeholder="Ticket Number" formControlName="ticketNumber" #ticketNumber>
+        <input matInput placeholder="Issue Number" formControlName="issueNumber" #issueNumber>
       </mat-form-field>
       <br>
       <mat-form-field>
-          <mat-select placeholder="Type" formControlName="ticketType" #ticketType>
+          <mat-select placeholder="Type" formControlName="issueCategory" #issueCategory>
             <mat-option value="Development">Development</mat-option>
             <mat-option value="Testing">Testing</mat-option>
             <mat-option value="Production">Production</mat-option>

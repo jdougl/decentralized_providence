@@ -1,10 +1,9 @@
 export interface Issue {
-		 id: string,
+		 issueNumber: number,
 		 issueCategory: string,
 		 issueDescription: string,
-		 issueEndDate: Date,
-		 issueNumber: number,
 		 issueStartDate: Date,
+		 issueEndDate: Date,
 		 numVotes: number,
 		 status: string,
 		//public comments: TicketComment[]) 

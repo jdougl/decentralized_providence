@@ -26,25 +26,25 @@ export class CreateComponent implements OnInit {
     });
    }
 
-   addBug(issueCategory, issueDescription, issueEndDate, issueNumber, issueStartDate, numVotes, status) {
+   addIssue(issueNumber, issueCategory, issueDescription, issueStartDate, issueEndDate, numVotes, status) {
     	const issueTicket = {
-      issueCategory: issueCategory,
-      issueDescription: issueDescription,
-      issueEndDate: issueEndDate,
-      issueNumber: issueNumber,
-      issueStartDate: issueStartDate,
-      numVotes: numVotes,
-      status: status,
+        id: issueNumber,
+        issueCategory: issueCategory,
+        issueDescription: issueDescription,
+        issueStartDate: issueStartDate,
+        issueEndDate: issueEndDate,
+        numVotes: 0,
+        status: status,
     };
 
     this.issueService.addIssue(issueTicket);
 
-    //repops bug early - mainly just to avoid ticketDate getting flagged as not existing
+    //repops issues early - this is just to dispel any concurrency issues
     this.issueService.repop();
 
-    console.log("Bug written to backend DB");
+    console.log("Issue written to backend DB");
 
-    alert("Bug added");
+    alert("Issue added");
 
     this.router.navigate(['/list']);
     
