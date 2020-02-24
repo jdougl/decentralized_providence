@@ -13,7 +13,7 @@ import { AuthService } from '../../auth.service';
 })
 export class ListComponent implements OnInit {
 	issues: Issue[];
-	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status'];
+	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status', 'actions'];
   
 
   constructor(private issueService: IssuesService, private router: Router, private auth: AuthService) {

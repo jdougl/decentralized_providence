@@ -1,4 +1,5 @@
 export interface Issue {
+		 id: string,
 		 issueNumber: number,
 		 issueCategory: string,
 		 issueDescription: string,

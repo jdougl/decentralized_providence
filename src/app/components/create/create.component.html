@@ -4,6 +4,7 @@
     <section class="mat-typography">
       <h3>Create A New Issue</h3>
     </section>
+
     <mat-divider></mat-divider>
     <br>
     <form [formGroup]="createForm" class="create-form">
@@ -12,29 +13,31 @@
       </mat-form-field>
       <br>
       <mat-form-field>
-          <mat-select placeholder="Type" formControlName="issueCategory" #issueCategory>
-            <mat-option value="Development">Infrastructure</mat-option>
-            <mat-option value="Testing">Energy</mat-option>
-            <mat-option value="Production">Political</mat-option>
+          <mat-select placeholder="Issue Type" formControlName="issueCategory" #issueCategory>
+            <mat-option value="Infrastructure">Infrastructure</mat-option>
+            <mat-option value="Energy">Energy</mat-option>
+            <mat-option value="Political">Political</mat-option>
           </mat-select>
       </mat-form-field>
       <br>
       <mat-form-field class="field-full-width">
         <input matInput placeholder="Issue Description" formControlName="issueDescription" #issueDescription>
       </mat-form-field>
+
       <br>
       <mat-form-field class="field-full-width">
-        <input matInput placeholder="Start Date" [matDatepicker]="issueStartDate">
+        <input matInput placeholder="Start Date" (dateInput)="setStartDate($event.value)" [matDatepicker]="issueStartDate">
         <mat-datepicker-toggle matSuffix [for]="issueStartDate"></mat-datepicker-toggle>
         <mat-datepicker #issueStartDate></mat-datepicker>
       </mat-form-field>
       <br>
+
       <mat-form-field class="field-full-width">
-        <input matInput [matDatepicker]="issueEndDate">
+        <input matInput placeholder="End Date" (dateInput)="setEndDate($event.value)"  [matDatepicker]="issueEndDate">
         <mat-datepicker-toggle matSuffix [for]="issueEndDate"></mat-datepicker-toggle>
         <mat-datepicker #issueEndDate></mat-datepicker>
       </mat-form-field>
-      <br>
+
       <br>
       <mat-form-field>
           <mat-select placeholder="Status" formControlName="status" #status>
@@ -48,7 +51,7 @@
       <mat-divider></mat-divider>
       <br><br>
       <button mat-raised-button color="accent" routerLink="/list">Back</button>&nbsp;
-      <button type="submit" (click)="addIssue(issueNumber.value, issueCategory.value, issueDescription.value, issueStartDate.date, issueEndDate.date, status.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Save</button>
+      <button type="submit" (click)="addIssue(issueNumber.value, issueCategory.value, issueDescription.value, status.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Save</button>
     </form>
   </mat-card>
 </div>
