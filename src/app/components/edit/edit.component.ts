@@ -19,6 +19,9 @@ export class EditComponent implements OnInit {
   issue: any = {};
   updateForm: FormGroup;
 
+  newIssueStartDate;
+  newIssueEndDate;
+
   constructor(private issueService: IssuesService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) { 
     this.createForm();
   }
@@ -28,12 +31,10 @@ export class EditComponent implements OnInit {
       this.id = params.id;
       this.issueService.getIssueById(this.id).subscribe(res => {
         this.issue = res;
+        this.updateForm.get('issueNumber').setValue(this.issue.issueNumber);
         this.updateForm.get('issueCategory').setValue(this.issue.issueCategory);
         this.updateForm.get('issueDescription').setValue(this.issue.issueDescription);
         this.updateForm.get('issueEndDate').setValue(this.issue.issueEndDate);
-        this.updateForm.get('issueNumber').setValue(this.issue.issueNumber);
-        this.updateForm.get('issueStartDate').setValue(this.issue.issueStartDate);
-        this.updateForm.get('numVotes').setValue(this.issue.numVotes);
         this.updateForm.get('status').setValue(this.issue.status);
       });
     });
@@ -41,25 +42,35 @@ export class EditComponent implements OnInit {
 
   createForm() {
     this.updateForm = this.fb.group({
-      issueCategory: '',
-      issueDescription: '',
-      issueEndDate: '',
-      issueNumber: '',
-      issueStartDate: '',
-      numVotes: '',
-      status: ''
+      issueNumber: [{value:this.issue.issueNumber, disabled:true}],
+      issueCategory: this.issue.issueCategory,
+      issueDescription: this.issue.issueDescription,
+      issueEndDate: this.issue.issueEndDate,
+      status: this.issue.status,
     });
   }
 
-   updateIssue(issueCategory, issueDescription, issueEndDate, issueNumber, issueStartDate, numVotes, status) {
+   updateIssue(issueCategory, issueDescription, status) {
+    
+    //makes sure values are defined, this gets rid of an error on some values if they are unchanged.
+    if (typeof issueCategory == 'undefined') {
+      issueCategory = this.issue.issueCategory;
+    }
+    if (typeof issueDescription == 'undefined') {
+      issueCategory = this.issue.issueDescription;
+    }
+    if (typeof status == 'undefined') {
+      issueCategory = this.issue.status;
+    }
+
     const newIssueTicket = {
+      issueNumber: this.issue.issueNumber,
       issueCategory: issueCategory,
       issueDescription: issueDescription,
-      issueEndDate: issueEndDate,
-      issueNumber: issueNumber,
-      issueStartDate: issueStartDate,
-      numVotes: numVotes,
+      issueStartDate: this.issue.issueStartDate,
+      issueEndDate: this.newIssueEndDate,
       status: status,
+      numVotes: this.issue.numVotes
     };
 
     this.issueService.updateIssue(this.id, newIssueTicket);
@@ -70,6 +81,15 @@ export class EditComponent implements OnInit {
 
     this.router.navigate(['/list']);
   }
+
+    setNewStartDate(minDate) {
+      this.newIssueStartDate = minDate.toISOString();
+    }
+
+    //sets end date on change event from end date datepicker
+    setNewEndDate(maxDate) {
+      this.newIssueEndDate = maxDate.toISOString();
+    }
 
   
 

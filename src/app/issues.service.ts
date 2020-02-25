@@ -28,7 +28,7 @@ export class IssuesService {
   }
 
   getIssueById(id) {
-    return this.issuesCollection.doc(id).get();
+    return this.issuesCollection.doc(id).valueChanges();
   }
 
   //add issue to firebase DB
