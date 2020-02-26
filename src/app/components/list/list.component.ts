@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material';
 import { Issue } from '../../models/issue.model';
 import { IssuesService } from '../../issues.service';
 import { AuthService } from '../../auth.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-list',
@@ -16,7 +17,7 @@ export class ListComponent implements OnInit {
 	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status', 'actions'];
   
 
-  constructor(private issueService: IssuesService, private router: Router, private auth: AuthService) {
+  constructor(private issueService: IssuesService, private router: Router, private auth: AuthService, private dialog: MatDialog) {
      this.fetchIssues();
    }
 
@@ -41,6 +42,25 @@ export class ListComponent implements OnInit {
 
   editIssue(id) {
     this.router.navigate([`/edit/${id}`]);
+  }
+
+  //opens vote for or against modal
+  openModal() {
+    this.dialog.open();
+  }
+
+  vote(id, voteDirection) {
+
+    console.log(this.issues);
+
+    var votedIssue;
+
+    //finding issue with selected ID
+    for (var i = 0; i < this.issues.length; i++) {
+      if(this.issues[i].id == id) {
+        this.issueService.addVote(id, this.issues[i], voteDirection);
+      }
+    }
   }
 
   //logs out user

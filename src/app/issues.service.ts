@@ -58,4 +58,22 @@ export class IssuesService {
     this.issuesCollection.doc(id).update(newIssueTicket);
   }
 
+  //votefor to DB
+  addVote(id, votedIssue, voteDirection) {
+    
+    //assigning the users that have voted on the issue and finding the current user ID
+    var votedUids = votedIssue.votedUids;
+    var currentUid = firebase.auth().currentUser;
+
+    //checking if the user has already voted, if it has it can't vote, if it hasn't add vote
+    if(votedUids.has([currentUid])) {
+      console.log("User has already voted")
+      alert("You have already voted on this issue")
+    }
+    else {
+      //vote logic
+    }
+    
+  }
+
 }

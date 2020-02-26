@@ -37,7 +37,8 @@ export class CreateComponent implements OnInit {
         issueStartDate: this.issueStartDate,
         issueEndDate: this.issueEndDate,
         status: status,
-        numVotes: 0
+        numVotes: 0,
+        votedUids: {}
     };
 
     this.issueService.addIssue(issueTicket);

@@ -55,5 +55,6 @@ export class AuthService {
       console.log("Error signing out", error);
     });
   }
+
 }
 

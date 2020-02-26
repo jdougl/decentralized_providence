@@ -20,7 +20,8 @@ import {
   MatButtonModule, 
   MatCardModule, 
   MatTableModule, 
-  MatDividerModule, 
+  MatDividerModule,
+  MatDialogModule, 
   MatSnackBarModule
 } from '@angular/material';
 import { appRoutes } from './routes';
@@ -61,6 +62,7 @@ import { EditComponent } from './components/edit/edit.component';
     MatButtonModule, 
     MatCardModule, 
     MatTableModule, 
+    MatDialogModule,
     MatDividerModule, 
     ReactiveFormsModule,
     MatSnackBarModule,
