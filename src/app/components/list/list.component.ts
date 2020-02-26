@@ -6,7 +6,7 @@ import { Issue } from '../../models/issue.model';
 import { IssuesService } from '../../issues.service';
 import { AuthService } from '../../auth.service';
 import { MatDialog } from '@angular/material';
-
+import { VotedialogComponent } from './votedialog/votedialog.component';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -45,8 +45,15 @@ export class ListComponent implements OnInit {
   }
 
   //opens vote for or against modal
-  openModal() {
-    this.dialog.open();
+  openDialog(id) {
+    let dialogRef = this.dialog.open(VotedialogComponent, {
+      height: '400px',
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.vote(id, result);
+    })
   }
 
   vote(id, voteDirection) {

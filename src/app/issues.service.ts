@@ -62,18 +62,34 @@ export class IssuesService {
   addVote(id, votedIssue, voteDirection) {
     
     //assigning the users that have voted on the issue and finding the current user ID
-    var votedUids = votedIssue.votedUids;
-    var currentUid = firebase.auth().currentUser;
+    var newVotedUids = votedIssue.votedUids;
+    var currentUid = firebase.auth().currentUser.uid;
 
     //checking if the user has already voted, if it has it can't vote, if it hasn't add vote
-    if(votedUids.has([currentUid])) {
+    if(newVotedUids.hasOwnProperty(currentUid)) {
       console.log("User has already voted")
       alert("You have already voted on this issue")
     }
+
+    //executes vote
     else {
-      //vote logic
+      //add Uid to voted Uids
+      newVotedUids[currentUid] = true;
+      
+      if(voteDirection == "true") {
+        this.issuesCollection.doc(id).update({
+          votesFor: firebase.firestore.FieldValue.increment(1),
+          votedUids: newVotedUids
+        })
+      }
+      else if(voteDirection == "false") {
+        this.issuesCollection.doc(id).update({
+          votesAgainst: firebase.firestore.FieldValue.increment(1),
+          votedUids: newVotedUids
+        })
+      }
+      }
+
     }
     
   }
-
-}

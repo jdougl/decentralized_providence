@@ -36,7 +36,7 @@ import { environment } from '../environments/environment';
 import { ListComponent } from './components/list/list.component';
 import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
-
+import { VotedialogComponent } from './components/list/votedialog/votedialog.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +46,10 @@ import { EditComponent } from './components/edit/edit.component';
     SignUpComponent,
     ListComponent,
     CreateComponent,
-    EditComponent
+    EditComponent,
+    VotedialogComponent,
   ],
+  entryComponents: [VotedialogComponent],
   imports: [
     BrowserAnimationsModule,
     CommonModule,
