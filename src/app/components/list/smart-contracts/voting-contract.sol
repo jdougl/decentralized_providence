@@ -10,16 +10,15 @@ contract ballot {
 	// This will represent a single voter
 	struct Voter {
 		uint weight; // weight is accumulated by delegation
-		bool voted;
-		address delegate;
-		uint vote;
+		bool voted; // has the user already voted?
+		address delegate; // address of user delegated to 
+		uint vote; // index of voted proposal
 	}
 
 	// represents a single proposal
 	struct Proposal {
 		bytes32 name; // short name of proposal
-		uint votesFor; // number of accumulated votes for the proposed idea
-		uint votesAgainst; // number of accumulated votes against the proposed idea
+		uint voteCount; // number of accumulated vote on proposal
 	}
 
 	address public chairperson;
