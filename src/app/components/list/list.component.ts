@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
   //opens vote for or against modal
   openDialog(id) {
     let dialogRef = this.dialog.open(VotedialogComponent, {
-      height: '400px',
+      height: '200px',
       width: '600px',
     });
 
@@ -62,7 +62,7 @@ export class ListComponent implements OnInit {
 
     var votedIssue;
 
-    //finding issue with selected ID
+    //finding issue with selected ID, adding vote to Firebase DB
     for (var i = 0; i < this.issues.length; i++) {
       if(this.issues[i].id == id) {
         this.issueService.addVote(id, this.issues[i], voteDirection);
