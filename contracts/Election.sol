@@ -8,7 +8,12 @@ contract Election {
     struct Proposal {
         uint id;
         string name;
-        uint voteCount;
+        uint votesFor;
+        uint votesAgainst;
+        uint totalVotes;
+
+        // true if proposal passed, false if it didn't
+        bool passed;
     }
 
     // Store accounts that have voted
@@ -27,10 +32,11 @@ contract Election {
 
     function addProposal (string memory _name) private {
         proposalsCount ++;
-        proposals[proposalsCount] = Proposal(proposalsCount, _name, 0);
+        proposals[proposalsCount] = Proposal(proposalsCount, _name, 0, 0, 0, false);
     }
 
-    function vote (uint _proposalId) public {
+    function voteFor (uint _proposalId) public {
+        
         // require that they haven't voted before
         require(!voters[msg.sender]);
 
@@ -41,6 +47,23 @@ contract Election {
         voters[msg.sender] = true;
 
         // update proposals vote Count
-        proposals[_proposalId].voteCount ++;
+        proposals[_proposalId].votesFor ++;
+        proposals[_proposalId].totalVotes ++;
+    }
+
+    function voteAgainst (uint _proposalId) public {
+        
+        // require that they haven't voted before
+        require(!voters[msg.sender]);
+
+        // require a valid proposal
+        require(_proposalId > 0 && _proposalId <= proposalsCount);
+
+        // record that voter has voted
+        voters[msg.sender] = true;
+
+        // update proposals vote Count
+        proposals[_proposalId].votesAgainst ++;
+        proposals[_proposalId].totalVotes ++;
     }
 }
