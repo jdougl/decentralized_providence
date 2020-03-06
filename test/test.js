@@ -35,16 +35,33 @@ contract("Election", function(accounts) {
   it("allows a voter to cast a vote for the proposal", function() {
     return Election.deployed().then(function(instance) {
       electionInstance = instance;
-      candidateId = 1;
-      return electionInstance.vote(candidateId, { from: accounts[0] });
+      proposalId = 1;
+      return electionInstance.voteFor(proposalId, { from: accounts[0] });
     }).then(function(receipt) {
       return electionInstance.voters(accounts[0]);
     }).then(function(voted) {
       assert(voted, "the voter was marked as voted");
-      return electionInstance.candidates(candidateId);
-    }).then(function(candidate) {
-      var voteCount = candidate[2];
-      assert.equal(voteCount, 1, "increments the candidate's vote count");
+      return electionInstance.proposals(proposalId);
+    }).then(function(proposal) {
+      var votesFor = proposal[2];
+      assert.equal(votesFor, 1, "increments the proposals vote for count");
+    })
+  });
+
+  // testing that a voter can cast a vote against the proposal
+  it("allows a voter to cast a vote against the proposal", function() {
+    return Election.deployed().then(function(instance) {
+      electionInstance = instance;
+      proposalId = 1;
+      return electionInstance.voteAgainst(proposalId, { from: accounts[1] });
+    }).then(function(receipt) {
+      return electionInstance.voters(accounts[1]);
+    }).then(function(voted) {
+      assert(voted, "the voter was marked as voted");
+      return electionInstance.proposals(proposalId);
+    }).then(function(proposal) {
+      var votesAgainst = proposal[3];
+      assert.equal(votesAgainst, 1, "increments the proposals vote against count");
     })
   });
 });
