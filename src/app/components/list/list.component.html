@@ -1,3 +1,6 @@
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
 <div>
   <br>
   <mat-card>
@@ -50,10 +53,22 @@
             <button mat-button color="warn" (click)="deleteIssue(element.id)"> Delete </button>
             <button mat-button color="warn" (click)="openDialog(element.id)"> Vote </button>
           </td>
-        </ng-container>
+      </ng-container>
+
+      <!-- Displays blockchain account address to frontend -->
+      <p id="accountAddress" class="text-center"></p>
+
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </mat-card>
 </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
