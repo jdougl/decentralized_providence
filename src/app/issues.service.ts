@@ -79,12 +79,14 @@ export class IssuesService {
       if(voteDirection == "true") {
         this.issuesCollection.doc(id).update({
           votesFor: firebase.firestore.FieldValue.increment(1),
+          numVotes: firebase.firestore.FieldValue.increment(1),
           votedUids: newVotedUids
         })
       }
       else if(voteDirection == "false") {
         this.issuesCollection.doc(id).update({
           votesAgainst: firebase.firestore.FieldValue.increment(1),
+          numVotes: firebase.firestore.FieldValue.increment(1),
           votedUids: newVotedUids
         })
       }

@@ -7,6 +7,8 @@ import { IssuesService } from '../../issues.service';
 import { AuthService } from '../../auth.service';
 import { MatDialog } from '@angular/material';
 import { VotedialogComponent } from './votedialog/votedialog.component';
+import { Web3Service } from '../../util/web3.service'
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
