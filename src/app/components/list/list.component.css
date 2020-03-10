@@ -1,3 +1,6 @@
+/* Bootstrap Import */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 table {
 	width: 100%;
 }
