@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import contract from 'truffle-contract';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 declare let require: any;
 const Web3 = require('web3');
 
@@ -16,9 +16,7 @@ export class Web3Service {
   public accountsObservable = new Subject<string[]>();
 
   constructor() {
-    window.addEventListener('load', (event) => {
       this.bootstrapWeb3();
-    });
   }
 
   public bootstrapWeb3() {
@@ -26,6 +24,7 @@ export class Web3Service {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
+      console.log("Web3 Assigned...");
     } else {
       console.log('No web3? You should consider trying MetaMask!');
 
@@ -35,7 +34,7 @@ export class Web3Service {
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
 
-    setInterval(() => this.refreshAccounts(), 100);
+    setInterval(() => this.refreshAccounts(), 1000);
   }
 
   public async artifactsToContract(artifacts) {
@@ -70,9 +69,15 @@ export class Web3Service {
 
         this.accountsObservable.next(accs);
         this.accounts = accs;
+
+        console.log(accs);
       }
 
       this.ready = true;
     });
+  }
+
+  getAccounts() {
+    return this.accountsObservable;
   }
 }

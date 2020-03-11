@@ -19,7 +19,7 @@ export class ListComponent implements OnInit {
 	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status', 'actions'];
   
 
-  constructor(private issueService: IssuesService, private router: Router, private auth: AuthService, private dialog: MatDialog) {
+  constructor(private issueService: IssuesService, private router: Router, private auth: AuthService, private dialog: MatDialog, private web3service: Web3Service) {
      this.fetchIssues();
    }
 
@@ -35,6 +35,11 @@ export class ListComponent implements OnInit {
       this.issues = data;
       console.log('Data requested ... ');
     });
+
+    this.fetchBlockchainAccounts();
+  }
+
+  fetchBlockchainAccounts() {
   }
   
   deleteIssue(id) {

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import 'bootstrap';
 
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
@@ -28,6 +29,7 @@ import { UserComponent } from './user/user.component';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { AuthGuard } from './auth.guard';
+import {Web3Service} from './util/web3.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -75,7 +77,7 @@ import { VotedialogComponent } from './components/list/votedialog/votedialog.com
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule // imports firebase/auth, only needed for auth features
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, Web3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
