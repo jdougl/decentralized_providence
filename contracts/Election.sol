@@ -25,6 +25,10 @@ contract Election {
     // Store Proposals Count
     uint public proposalsCount;
 
+    event votedEvent (
+        uint indexed _proposalId
+    );
+
     constructor() public {
         addProposal("Proposal 1");
         addProposal("Proposal 2");
@@ -35,6 +39,7 @@ contract Election {
         proposals[proposalsCount] = Proposal(proposalsCount, _name, 0, 0, 0, false);
     }
 
+    // increments votes for
     function voteFor (uint _proposalId) public {
         
         // require that they haven't voted before
@@ -49,8 +54,12 @@ contract Election {
         // update proposals vote Count
         proposals[_proposalId].votesFor ++;
         proposals[_proposalId].totalVotes ++;
+
+        // trigger voted event - acts as extra defence against multiple votes
+        emit votedEvent(_proposalId);
     }
 
+    // increments votes against
     function voteAgainst (uint _proposalId) public {
         
         // require that they haven't voted before
@@ -65,5 +74,23 @@ contract Election {
         // update proposals vote Count
         proposals[_proposalId].votesAgainst ++;
         proposals[_proposalId].totalVotes ++;
+
+        // trigger voted event - acts as extra defence against multiple votes
+        emit votedEvent(_proposalId);
+    }
+
+    function didPass(uint _proposalId) public
+            returns (bool passed_)
+    {
+        if(proposals[_proposalId].votesFor >= proposals[_proposalId].votesAgainst) {
+            proposals[_proposalId].passed = true;
+        }
+
+        else {
+            proposals[_proposalId].passed = false;
+        }
+
+        passed_ = proposals[_proposalId].passed;
     }
 }
+
