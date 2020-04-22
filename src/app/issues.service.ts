@@ -54,6 +54,7 @@ export class IssuesService {
     this.issuesCollection.doc(id).delete();
   }
 
+  //updates issue in backend
   updateIssue(id, newIssueTicket) {
     this.issuesCollection.doc(id).update(newIssueTicket);
   }

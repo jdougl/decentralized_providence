@@ -79,6 +79,7 @@ contract Election {
         emit votedEvent(_proposalId);
     }
 
+    // automatic tallying of votes & returns winning proposal
     function didPass(uint _proposalId) public
             returns (bool passed_)
     {
