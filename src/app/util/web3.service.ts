@@ -3,7 +3,10 @@ import contract from 'truffle-contract';
 import { Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Issue } from './models/issue.model';
+import { AccountAddr } from '.././models/account.model';
+import * as firebase from 'firebase/app';
+import { Observable } from 'rxjs';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 
 declare let require: any;
 const Web3 = require('web3');
@@ -19,10 +22,12 @@ export class Web3Service {
 
   public accountsObservable = new Subject<string[]>();
 
-  accountCollection: AngularFirestoreCollection<AccountAddr>;
+  accountsCollection: AngularFirestoreCollection<AccountAddr>;
+  myAccounts: AccountAddr[]
 
-  constructor() {
+  constructor(private db: AngularFirestore) {
       this.bootstrapWeb3();
+      this.accountsCollection = db.collection<AccountAddr>("accountAddrs");
   }
 
   public bootstrapWeb3() {
@@ -86,8 +91,31 @@ export class Web3Service {
     return this.accountsObservable;
   }
 
+  // adds account addr pair to firebase collection
+  addAccountAddr(accountAddrTicket) {
+    this.accountsCollection.add(accountAddrTicket);
+  }
+
   // quick function to assign a blockchain address to a user if the user does not have one
   assignAddressToUser() {
+    var currentUid = firebase.auth().currentUser.uid;
+    var doesExist = false;
 
+    // checking if account already has an address assigned
+    this.myAccounts.forEach(accountItem => {
+      if(accountItem.accUid == currentUid) {
+        var doesExist = true;
+      }
+      else {
+        // make ticket
+        const accAddrPairTicket = {
+          accUid: currentUid,
+          accAddress: this.accounts[this.myAccounts.length]
+        }
+
+        // add accountUID accountADDR pair to the DB
+        this.addAccountAddr(accAddrPairTicket)
+      }
+    });
   }
 }
