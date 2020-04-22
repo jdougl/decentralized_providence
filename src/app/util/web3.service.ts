@@ -70,7 +70,6 @@ export class Web3Service {
         this.accountsObservable.next(accs);
         this.accounts = accs;
 
-        console.log(accs);
       }
 
       this.ready = true;

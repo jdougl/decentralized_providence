@@ -16,6 +16,8 @@ import { Web3Service } from '../../util/web3.service'
 })
 export class ListComponent implements OnInit {
 	issues: Issue[];
+  accounts: string[];
+
 	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status', 'actions'];
   
 
@@ -40,6 +42,11 @@ export class ListComponent implements OnInit {
   }
 
   fetchBlockchainAccounts() {
+    this.web3service.getAccounts().subscribe((data: string[]) => {
+      this.accounts = data;
+
+      console.log(this.accounts);
+    });
   }
   
   deleteIssue(id) {

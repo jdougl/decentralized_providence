@@ -29,9 +29,9 @@ contract Election {
         uint indexed _proposalId
     );
 
-    constructor() public {
-        addProposal("Proposal 1");
-        addProposal("Proposal 2");
+    // create a proposal with given name
+    constructor(string _name1) public {
+        addProposal(_name1);
     }
 
     function addProposal (string memory _name) private {
