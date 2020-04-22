@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import contract from 'truffle-contract';
 import { Subject } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Issue } from './models/issue.model';
+
 declare let require: any;
 const Web3 = require('web3');
 
@@ -14,6 +18,8 @@ export class Web3Service {
   public ready = false;
 
   public accountsObservable = new Subject<string[]>();
+
+  accountCollection: AngularFirestoreCollection<AccountAddr>;
 
   constructor() {
       this.bootstrapWeb3();
@@ -78,5 +84,10 @@ export class Web3Service {
 
   getAccounts() {
     return this.accountsObservable;
+  }
+
+  // quick function to assign a blockchain address to a user if the user does not have one
+  assignAddressToUser() {
+
   }
 }
