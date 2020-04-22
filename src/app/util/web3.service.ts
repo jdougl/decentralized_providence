@@ -22,12 +22,12 @@ export class Web3Service {
 
   public accountsObservable = new Subject<string[]>();
 
-  accountsCollection: AngularFirestoreCollection<AccountAddr>;
-  myAccounts: AccountAddr[]
+  accountsAddrCollection: AngularFirestoreCollection<AccountAddr>;
+  currentAccount: AccountAddr
 
   constructor(private db: AngularFirestore) {
       this.bootstrapWeb3();
-      this.accountsCollection = db.collection<AccountAddr>("accountAddrs");
+      this.accountsAddrCollection = db.collection<AccountAddr>("accountAddrs");
   }
 
   public bootstrapWeb3() {
@@ -45,7 +45,7 @@ export class Web3Service {
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
 
-    setInterval(() => this.refreshAccounts(), 1000);
+    setInterval(() => this.refreshAccounts(), 5000);
   }
 
   public async artifactsToContract(artifacts) {
@@ -87,13 +87,14 @@ export class Web3Service {
     });
   }
 
+  // return blockchain addresses
   getAccounts() {
     return this.accountsObservable;
   }
 
   // adds account addr pair to firebase collection
   addAccountAddr(accountAddrTicket) {
-    this.accountsCollection.add(accountAddrTicket);
+    this.accountsAddrCollection.add(accountAddrTicket);
   }
 
   // quick function to assign a blockchain address to a user if the user does not have one
@@ -102,20 +103,32 @@ export class Web3Service {
     var doesExist = false;
 
     // checking if account already has an address assigned
-    this.myAccounts.forEach(accountItem => {
-      if(accountItem.accUid == currentUid) {
+    this.accountsAddrCollection.get().forEach(accountItem => {
+      if(accountItem['accUid'] == currentUid) {
+        this.currentAccount = accountItem['accAddress'];
         var doesExist = true;
+
+        console.log("User exists and has a tied address: " + accountItem['accAddress'])
       }
       else {
+        console.log(accountItem);
+
         // make ticket
         const accAddrPairTicket = {
           accUid: currentUid,
-          accAddress: this.accounts[this.myAccounts.length]
+          accAddress: this.accounts[accountItem.size]
         }
+
+        console.log("Added accountUID / Blockchain Address pair: " + accAddrPairTicket)
 
         // add accountUID accountADDR pair to the DB
         this.addAccountAddr(accAddrPairTicket)
       }
     });
+  }
+
+  // get current account - address for signed in user
+  getSignedInAddress() {
+    return this.currentAccount;
   }
 }
