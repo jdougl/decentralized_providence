@@ -23,7 +23,7 @@ export class Web3Service {
   public accountsObservable = new Subject<string[]>();
 
   accountsAddrCollection: AngularFirestoreCollection<AccountAddr>;
-  currentAccount: AccountAddr
+  currentAccount: string;
 
   constructor(private db: AngularFirestore) {
       this.bootstrapWeb3();
@@ -46,6 +46,13 @@ export class Web3Service {
     }
 
     setInterval(() => this.refreshAccounts(), 5000);
+
+    // assigns a Blockchain address to the currently signed in user if the current user does not have one
+    var that = this
+    setTimeout(function(){
+      that.assignAddressToUser();
+    }, 7000);
+
   }
 
   public async artifactsToContract(artifacts) {
@@ -85,9 +92,6 @@ export class Web3Service {
 
       this.ready = true;
     });
-
-    // assigns a Blockchain address to the currently signed in user if the current user does not have one
-    this.assignAddressToUser();
   }
 
   // return blockchain addresses
@@ -105,23 +109,21 @@ export class Web3Service {
     var currentUid = firebase.auth().currentUser.uid;
     var doesExist = false;
     var collectionSize = 0;
-    var accountAddresses: string[]
 
     // checking if account already has an address assigned
     this.accountsAddrCollection.get().forEach(accountItem => {
       collectionSize++;
-      accountAddresses.push("accountItem['accAddress']")
+      console.log(collectionSize);
 
       if(accountItem['accUid'] == currentUid) {
         this.currentAccount = accountItem['accAddress'];
         var doesExist = true;
 
         console.log("User exists and has a tied address: " + accountItem['accAddress'])
-      }
-    });
+        }
+      });
 
     if(doesExist == false) {
-      console.log(accountAddresses);
 
         // make ticket
         const accAddrPairTicket = {
@@ -129,7 +131,7 @@ export class Web3Service {
           accAddress: this.accounts[collectionSize]
         }
 
-        console.log("Added accountUID / Blockchain Address pair: " + accAddrPairTicket)
+        console.log("Added accountUID / Blockchain Address pair")
 
         // add accountUID accountADDR pair to the DB
         this.addAccountAddr(accAddrPairTicket)

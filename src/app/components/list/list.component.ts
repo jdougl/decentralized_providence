@@ -17,6 +17,7 @@ import { Web3Service } from '../../util/web3.service'
 export class ListComponent implements OnInit {
 	issues: Issue[];
   accounts: string[];
+  currentAddress: string;
 
 	displayedColumns = ['issueCategory', 'issueDescription', 'issueEndDate', 'issueNumber', 'issueStartDate', 'numVotes', 'status', 'actions'];
   
@@ -40,6 +41,12 @@ export class ListComponent implements OnInit {
 
     this.fetchBlockchainAccounts();
 
+    console.log(this.web3service.getSignedInAddress);
+    
+    var that = this;
+    setTimeout(function(){
+      this.currentAddress = that.web3service.getSignedInAddress();
+    }, 7500);
   }
 
   fetchBlockchainAccounts() {
