@@ -17,4 +17,11 @@ A decentralized demonstration of e-Voting via the ethereum platform - hopes to u
 
 * Huaglory, Tianfield - supervisor for this project
 
+## To Do
+
+This app primarily was to act as a demonstration, therefore it's not intended to be an enterprise application - more to demonstrate interaction with a local blockchain and how this can benefit e-Voting.
+
+1. Add In-App block explorer
+2. Extra smart-contract functionality
+
 
