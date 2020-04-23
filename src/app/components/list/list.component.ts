@@ -89,6 +89,13 @@ export class ListComponent implements OnInit {
         this.issueService.addVote(id, this.issues[i], voteDirection);
       }
     }
+    
+    if(voteDirection == true) {
+      this.web3service.voteFor(id);
+    }
+    else if(voteDirection == false) {
+      this.web3service.voteAgainst(id);
+    }
   }
 
   //logs out user
