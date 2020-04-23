@@ -40,20 +40,18 @@ export class ListComponent implements OnInit {
     });
 
     this.fetchBlockchainAccounts();
-
-    console.log(this.web3service.getSignedInAddress);
     
     var that = this;
     setTimeout(function(){
-      this.currentAddress = that.web3service.getSignedInAddress();
-    }, 7500);
+      that.currentAddress = that.web3service.getSignedInAddress();
+      console.log(this.currentAddress)
+    }, 8000);
+
   }
 
   fetchBlockchainAccounts() {
     this.web3service.getAccounts().subscribe((data: string[]) => {
       this.accounts = data;
-
-      console.log("Agh: " + this.accounts);
     });
   }
   

@@ -107,22 +107,27 @@ export class Web3Service {
   // quick function to assign a blockchain address to a user if the user does not have one
   assignAddressToUser() {
     var currentUid = firebase.auth().currentUser.uid;
-    var doesExist = false;
+    var doesExist;
     var collectionSize = 0;
+    var that = this;
 
     // checking if account already has an address assigned
-    this.accountsAddrCollection.get().forEach(accountItem => {
+    this.accountsAddrCollection.valueChanges().forEach(accountItem => {
       collectionSize++;
       console.log(collectionSize);
+      if(accountItem[0]['accUid'] == currentUid) {
+        that.currentAccount = accountItem[0]['accAddress'];
+        doesExist = true;
 
-      if(accountItem['accUid'] == currentUid) {
-        this.currentAccount = accountItem['accAddress'];
-        var doesExist = true;
-
-        console.log("User exists and has a tied address: " + accountItem['accAddress'])
+        console.log("User exists and has a tied address: " + accountItem[0]['accAddress'])
         }
+        else {
+          doesExist = false;
+        }
+
       });
 
+    // if user doesn't exist add to backend
     if(doesExist == false) {
 
         // make ticket
