@@ -163,7 +163,7 @@ export class Web3Service {
   }
 
   // function to vote on election smart contract - local blockchain
-  voteFor() {
+  voteAgainst() {
     var myContractAbstraction = this.artifactsToContract; // get contract abstraction
 
 
