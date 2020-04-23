@@ -1,7 +1,7 @@
 // jdougl | S1625371 
 import { Injectable } from '@angular/core';
 import contract from 'truffle-contract';
-import artifacts from '../../build/contracts/contract.json'
+import artifacts from '../../../build/contracts/Election.json'
 import { Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -152,7 +152,7 @@ export class Web3Service {
   }
 
   // function to vote on election smart contract - local blockchain
-  voteFor() {
+  voteFor(id) {
     var myContractAbstraction = this.artifactsToContract; // get contract abstraction
 
 
