@@ -40,8 +40,6 @@ export class ListComponent implements OnInit {
 
     this.fetchBlockchainAccounts();
 
-    // assigns a Blockchain address to the currently signed in user if the current user does not have one
-    this.web3service.assignAddressToUser();
   }
 
   fetchBlockchainAccounts() {

@@ -85,6 +85,9 @@ export class Web3Service {
 
       this.ready = true;
     });
+
+    // assigns a Blockchain address to the currently signed in user if the current user does not have one
+    this.assignAddressToUser();
   }
 
   // return blockchain addresses
@@ -101,30 +104,36 @@ export class Web3Service {
   assignAddressToUser() {
     var currentUid = firebase.auth().currentUser.uid;
     var doesExist = false;
+    var collectionSize = 0;
+    var accountAddresses: string[]
 
     // checking if account already has an address assigned
     this.accountsAddrCollection.get().forEach(accountItem => {
+      collectionSize++;
+      accountAddresses.push("accountItem['accAddress']")
+
       if(accountItem['accUid'] == currentUid) {
         this.currentAccount = accountItem['accAddress'];
         var doesExist = true;
 
         console.log("User exists and has a tied address: " + accountItem['accAddress'])
       }
-      else {
-        console.log(accountItem);
+    });
+
+    if(doesExist == false) {
+      console.log(accountAddresses);
 
         // make ticket
         const accAddrPairTicket = {
           accUid: currentUid,
-          accAddress: this.accounts[accountItem.size]
+          accAddress: this.accounts[collectionSize]
         }
 
         console.log("Added accountUID / Blockchain Address pair: " + accAddrPairTicket)
 
         // add accountUID accountADDR pair to the DB
         this.addAccountAddr(accAddrPairTicket)
-      }
-    });
+    }
   }
 
   // get current account - address for signed in user
