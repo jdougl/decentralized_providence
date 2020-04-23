@@ -1,3 +1,4 @@
+// jdougl | S1625371 
 import { Injectable } from '@angular/core';
 import contract from 'truffle-contract';
 import { Subject } from 'rxjs';

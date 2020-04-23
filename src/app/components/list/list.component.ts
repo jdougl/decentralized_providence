@@ -1,3 +1,4 @@
+// jdougl | S1625371
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
