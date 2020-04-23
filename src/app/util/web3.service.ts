@@ -1,6 +1,7 @@
 // jdougl | S1625371 
 import { Injectable } from '@angular/core';
 import contract from 'truffle-contract';
+import artifacts from '../../build/contracts/contract.json'
 import { Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -29,6 +30,7 @@ export class Web3Service {
   constructor(private db: AngularFirestore) {
       this.bootstrapWeb3();
       this.accountsAddrCollection = db.collection<AccountAddr>("accountAddrs");
+
   }
 
   public bootstrapWeb3() {
@@ -148,4 +150,27 @@ export class Web3Service {
   getSignedInAddress() {
     return this.currentAccount;
   }
+
+  // function to vote on election smart contract - local blockchain
+  voteFor() {
+    var myContractAbstraction = this.artifactsToContract; // get contract abstraction
+
+
+    // this is how you vote on a proposal on local blockchain
+    myContractAbstraction(artifacts).deployed().then(function(voteFor){
+
+    });
+  }
+
+  // function to vote on election smart contract - local blockchain
+  voteFor() {
+    var myContractAbstraction = this.artifactsToContract; // get contract abstraction
+
+
+    // this is how you vote on a proposal on local blockchain
+    myContractAbstraction(artifacts).deployed().then(function(voteFor){
+
+    });
+  }
+
 }
